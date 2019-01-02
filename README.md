@@ -18,6 +18,9 @@ Visit [http://localhost:3000/](http://localhost:3000/) and enter a (case-sensiti
 
 ![Output](https://user-images.githubusercontent.com/15971213/50614735-afdeac80-0e96-11e9-8e4a-19674158e632.png)
 
+## Known Limitation(s)
+* At the current time, it will only pull in the first 100 repositories since Github's API wants a paging metaphor after that. TBD
+
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|

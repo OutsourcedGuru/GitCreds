@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Enter your Github username to calculate some statistics.</p>
+    <form method="POST">
+    <input type="text" name="username" max="30" value="<%= username %>" id="inputUsername" />
+  </form>
+  <p>&nbsp;</p>
+  <hr width="350" align="left">
+  <table>
+    <tr><td align="right">Github username:</td><td><b><%= username %></b></td></tr>
+    <tr><td align="right">Fetch status:</td><td><b><%= status %></b></td></tr>
+    <% if (status == 'Success') { %>
+    <tr><td align="right">Repositories:</td><td><b><%= stats.nRepositories %></b></td></tr>
+    <tr><td align="right">Authored:</td><td><b><%= stats.nAuthored %></b></td></tr>
+    <tr><td align="right">Forked:</td><td><b><%= stats.nForked %></b></td></tr>
+    <tr><td align="right">Authored %:</td><td><b><%= stats.fAuthoredPercent %>%</b></td></tr>
+    <% } %>
+  </table>
+  <hr width="350" align="left">
+  <div id="pie-chart" style="width:300px;height:200px"></div>
+<script src="/javascripts/flotr2.js?d3fa1"></script>
+<script>
+  document.getElementById('inputUsername').focus();
+
+  <% if (username.length > 0 && status == 'Success') { %>
+    (function basic_pie(container) {
+      var
+        d1 = [[0, <%= stats.nAuthored %>]],
+        d2 = [[0, <%= stats.nForked %>]],
+        graph;
+
+      graph = Flotr.draw(container, [
+        { data : d1, label : 'Authored' },
+        { data : d2, label : 'Forked' }
+      ], {
+        HtmlText : false,
+        grid : {
+          verticalLines : false,
+          horizontalLines : false
+        },
+        xaxis : { showLabels : false },
+        yaxis : { showLabels : false },
+        pie : {
+          show : true, 
+          explode : 0
+        },
+        mouse : { track : true },
+        legend : {
+          position : 'ne',
+          backgroundColor : '#D2E8FF'
+        },
+        title : 'Github Repositories',
+        subtitle : 'By Authorship'
+      });
+    })(document.getElementById("pie-chart"));
+  <% } %>
+</script>
+</body>
+</html>
